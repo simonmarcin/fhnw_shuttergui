@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Shutter Service 2.0</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="jquery-3.1.0.min.js">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- Custom styles for this template -->
+	<link href="shutter.css" rel="stylesheet">
+    <link href="bootstrap-slider.css" rel="stylesheet">
+
+	<script src="shutter.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
+	
+	
+	
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Shutter Service 2.0</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input id="hash" type="text" class="form-control" placeholder="Shutter Hash">
+          </form>
+        </div>
+      </div>
+    </nav>
+	
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar" id="room_list">
+            <li id="overview"><a href="http://10.84.82.239/">Overview <span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+		
+		
+		
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header" id="page-header"></h1>
+		  
+		  <div class="alert alert-danger hidden" id="error">
+			<strong>Authorisation ERROR!</strong> Please enter a correct shutter hash.
+		  </div>
+		  
+		  <div class="alert alert-warning hidden" id="warning">
+			<strong>Ups!</strong> Something went wrong. Sorry bro.
+		  </div>
+		  
+		  
+		  <div id="div_0" class="">
+			<h3 class="page-header" id="header_0"></h3>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="0_down">
+						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="0_up">
+						<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Up
+					</button>
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="0_stepdown">
+						<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> Step Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="0_stepup">
+						<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span> Step Up
+					</button>				
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="0_angle">Angle:</button>
+					</span>
+					<input type="text" class="form-control" placeholder="0 - 3 [closed - open]" id="0_angle_in">
+					</div><!-- /input-group -->
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="0_stop">
+						<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+					</button>	
+				</div>
+			</div>
+			
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Current Status:</span>
+						<input type="text" class="form-control" placeholder="0%" aria-describedby="basic-addon1" value="0%" disabled> 
+					</div>
+				</div>
+				<div class="col-md-4">
+					<input id="0_slider" type="text" class="sliders"/>
+				</div>
+			</div>  
+
+		  </div>
+
+
+		  <div id="div_1" class="">
+			<h3 class="page-header" id="header_1"></h3>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="1_down">
+						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="1_up">
+						<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Up
+					</button>
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="1_stepdown">
+						<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> Step Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="1_stepup">
+						<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span> Step Up
+					</button>				
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="1_angle">Angle:</button>
+					</span>
+					<input type="text" class="form-control" placeholder="0 - 3 [closed - open]" id="1_angle_in">
+					</div><!-- /input-group -->
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="1_stop">
+						<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+					</button>	
+				</div>
+			</div>
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Current Status:</span>
+						<input type="text" class="form-control" placeholder="0%" aria-describedby="basic-addon1" value="0%" disabled> 
+					</div>
+				</div>
+				<div class="col-md-4">
+					<input id="1_slider" type="text" class="sliders"/>
+				</div>
+			</div>  
+
+		  </div>
+		  
+		  
+		  <div id="div_2" class="">
+			<h3 class="page-header" id="header_2"></h3>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="2_down">
+						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="2_up">
+						<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Up
+					</button>
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="2_stepdown">
+						<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> Step Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="2_stepup">
+						<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span> Step Up
+					</button>				
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="2_angle">Angle:</button>
+					</span>
+					<input type="text" class="form-control" placeholder="0 - 3 [closed - open]" id="2_angle_in">
+					</div><!-- /input-group -->
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="2_stop">
+						<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+					</button>	
+				</div>
+			</div>
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Current Status:</span>
+						<input type="text" class="form-control" placeholder="0%" aria-describedby="basic-addon1" value="0%" disabled> 
+					</div>
+				</div>
+				<div class="col-md-4">
+					<input id="2_slider" type="text" class="sliders"/>
+				</div>
+			</div>  
+
+		  </div>
+		  
+		  
+		  
+		  <div id="div_3" class="">
+			<h3 class="page-header" id="header_3"></h3>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="3_down">
+						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="3_up">
+						<span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Up
+					</button>
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-default btn-block btn-md" id="3_stepdown">
+						<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> Step Down
+					</button>
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="3_stepup">
+						<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span> Step Up
+					</button>				
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="3_angle">Angle:</button>
+					</span>
+					<input type="text" class="form-control" placeholder="0 - 3 [closed - open]" id="3_angle_in">
+					</div><!-- /input-group -->
+					<br><br>
+					<button type="button" class="btn btn-default btn-block btn-md" id="3_stop">
+						<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+					</button>	
+				</div>
+			</div>
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Current Status:</span>
+						<input type="text" class="form-control" placeholder="0%" aria-describedby="basic-addon1" value="0%" disabled> 
+					</div>
+				</div>
+				<div class="col-md-4">
+					<input id="3_slider" type="text" class="sliders"/>
+				</div>
+			</div>  
+
+		  </div>
+		  
+		  <div id="overview_body" class="hidden">
+			<p>Welcome to Shutter Service 2.0 - <a href="https://www.youtube.com/watch?v=PlsW2hd06R0">Simplify man</a>!</p><br>
+		  </div>
+		  
+
+		
+        </div>
+		
+
+		
+		
+		
+		
+      </div>	  
+    </div>
+	
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+	<p style="text-align: center;color:#808080;">by ssfss</p>
+
+    </nav>
+
+  </body>
+</html>
