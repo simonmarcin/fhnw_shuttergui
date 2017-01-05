@@ -42,6 +42,11 @@ function eraseCookie(name) {
     createCookie(name,"",-1);
 }
 
+function storeHash(name) {
+	var nowHash = $("#hash").val();
+	eraseCookie('shutter_hash_cookie');
+	createCookie('shutter_hash_cookie',nowHash,365);
+}
 
 	
 	$(document).ready(function(){
@@ -55,16 +60,34 @@ function eraseCookie(name) {
 			$("#hash").val(initHash);
 		}
 		
+		//Handle cookie hash
+		var nowHash = $("#hash").val();
 
 		//Get list of rooms	
-		$.getJSON('http://10.84.82.239:50001/knx/', function(data) {
-			$.each(data, function(key, value) {
-				$("#room_list").append('<li id="li_'+key+'"><a href="http://10.84.82.239?room='+key+'&debug=0/">'+key+'</a></li>');
-				if(key.localeCompare(room) == 0){
-					$("#li_"+key).addClass("active");
+		$.ajax({
+				type: 'POST',
+				url: 'http://10.84.82.239:50001/knx/', 
+				dataType: "JSON",
+				contentType: 'application/json',
+				data: '{"hash":"'+nowHash+'"}',
+				success: function(data){
+					$.each(data, function(key, value) {
+						$("#room_list").append('<li id="li_'+key+'"><a href="http://10.84.82.239?room='+key+'&debug=0/">'+key+'</a></li>');
+						if(key.localeCompare(room) == 0){
+							$("#li_"+key).addClass("active");
+						}
+					});
+				},
+				error: function(xhr, ajaxOptions, thrownError){
+					//get the status code
+					if (xhr.status == 401) {
+						$("#error").removeClass("hidden");
+					}
+					if(xhr.status == 400 || xhr.status == 500) {
+						$("#warning").removeClass("hidden");
+					}
 				}
 			});
-		});
 		
 
 		//Load specified romm content
@@ -75,9 +98,18 @@ function eraseCookie(name) {
 			//id of element
 			var element_id = 0;
 			
+			//Handle cookie hash
+			var nowHash = $("#hash").val();
+			
 			//Loop through all Shutters of the selected room
 			var shutters = [];
-			$.getJSON('http://10.84.82.239:50001/knx/'+room+'/', function(data) {
+			$.ajax({
+				type: 'POST',
+				url: 'http://10.84.82.239:50001/knx/'+room+'/', 
+				dataType: "JSON",
+				contentType: 'application/json',
+				data: '{"hash":"'+nowHash+'"}',
+				success: function(data){
 				$.each(data, function(key, value) {
 					//Write header
 					$("#header_"+element_id).text(key);
@@ -85,11 +117,20 @@ function eraseCookie(name) {
 					shutters[element_id] = key;
 					element_id += 1;
 				});
-				
 				for (i = element_id; i < 5; i++) { 
 					$("#div_"+i).addClass("hidden");
 				}
 
+			},
+				error: function(xhr, ajaxOptions, thrownError){
+					//get the status code
+					if (xhr.status == 401) {
+						$("#error").removeClass("hidden");
+					}
+					if(xhr.status == 400 || xhr.status == 500) {
+						$("#warning").removeClass("hidden");
+					}
+				}
 			});
 		
 		
@@ -131,7 +172,7 @@ function eraseCookie(name) {
 				url: req, 
 				dataType: "JSON",
 				contentType: 'application/json',
-				data: nowHash,
+				data: '{"hash":"'+nowHash+'"}',
 				success: function(result){
 					console.log("Request: "+req);
 				},

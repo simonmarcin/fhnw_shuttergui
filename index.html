@@ -49,7 +49,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Help</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
+          <form class="navbar-form navbar-right" action="" onsubmit="storeHash()">
             <input id="hash" type="text" class="form-control" placeholder="Shutter Hash">
           </form>
         </div>
@@ -285,6 +285,10 @@
 		  
 		  <div id="overview_body" class="hidden">
 			<p>Welcome to Shutter Service 2.0 - <a href="https://www.youtube.com/watch?v=PlsW2hd06R0">Simplify man</a>!</p><br>
+			<br>
+			<p><b>In case you would like to use cURL:</b><br><br>
+            <code>curl 'http://10.84.82.239:50001/knx/$ROOM/$SHUTTER/{up|down|stop|stepup| stepdown|angle}' -X POST -H 'Content-Length: 15' -H 'Content-Type: application/json' -d '$HASH'</code>
+			</p>
 		  </div>
 		  
 
